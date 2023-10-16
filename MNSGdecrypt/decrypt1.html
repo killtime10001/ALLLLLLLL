@@ -1,0 +1,52 @@
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+
+key：getDmmAccessToken>token<br>
+<input type="text" id="token" name="token">
+<br>
+data:<br>
+<input type="text" id="data" name="data">
+<br><br><br>
+<button onclick="testtt()">解密</button>
+<button onclick="ccccl()">data清空</button>
+<br><br><br>
+
+<textarea id='outppu' readonly></textarea>
+
+
+
+
+
+<script src="crypto-js.js"></script>
+<script src="aes.js"></script>
+
+
+
+
+<script>
+
+
+function testtt(){
+
+e=String(document.getElementById("token").value)
+t=String(document.getElementById("data").value.replaceAll('"',''))
+i = CryptoJS.SHA256(e + "one-deep")
+n = i.toString(CryptoJS.enc.Base64).substr(0, 32)
+o = {
+    iv: (i = CryptoJS.SHA256(e.substr(0, 16))).toString(CryptoJS.enc.Base64).substr(0, 16),
+    mode: CryptoJS.mode.CTR
+    };
+outdata=CryptoJS.AES.decrypt(t, n, o).toString(CryptoJS.enc.Utf8)
+document.getElementById("outppu").innerHTML=outdata
+
+}
+
+function ccccl(){
+document.getElementById("data").value=''
+}
+
+
+</script>
